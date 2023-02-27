@@ -1,0 +1,44 @@
+{
+  "name": "battleship-game",
+  "version": "1.0.0",
+  "description": "Battleship game implementation in vanilla JS with jest for unit testing",
+  "main": "app.js",
+  "scripts": {
+    "start": "webpack serve --open",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ManorSailor/battleship-game.git"
+  },
+  "keywords": [
+    "battleship"
+  ],
+  "author": "Sars",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ManorSailor/battleship-game/issues"
+  },
+  "homepage": "https://github.com/ManorSailor/battleship-game#readme",
+  "dependencies": {
+    "normalize.css": "^8.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "css-loader": "^6.7.3",
+    "eslint": "^8.35.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "html-webpack-plugin": "^5.5.0",
+    "jest": "^29.4.3",
+    "prettier": "2.8.4",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
