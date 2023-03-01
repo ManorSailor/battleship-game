@@ -11,6 +11,11 @@
     "sourceType": "module"
   },
   "rules": {
-    "exceptAfterSingleLine": true
+    // Thanks to: https://stackoverflow.com/a/62617652
+    "lines-between-class-members": [
+      "error",
+      "always",
+      { "exceptAfterSingleLine": true }
+    ]
   }
 }
