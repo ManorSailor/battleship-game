@@ -64,3 +64,30 @@ describe("Gameboard: placeShip", () => {
     expect(board.placeShip(ship, occupiedCoord2)).toBeFalsy();
   });
 });
+
+describe("Gameboard: receiveAttack", () => {
+  const board = Gameboard.newBoard(boardInfo);
+  const mockShip = { length: 3, takeHit: jest.fn() };
+
+  it("receives attack at passed coordinate", () => {
+    expect(board.receiveAttack([3, 3])).toBeTruthy();
+  });
+
+  it("notify the ship of hit if it exist at the passed coordinate", () => {
+    board.placeShip(mockShip, [1, 0]);
+    board.receiveAttack([1, 0]);
+    expect(mockShip.takeHit).toHaveBeenCalled();
+  });
+
+  it("ignores attacks on previously attacked coordinates", () => {
+    expect(board.receiveAttack([3, 3])).toBeFalsy();
+    expect(board.receiveAttack([1, 0])).toBeFalsy();
+  });
+
+  it("ignores invalid coordinates", () => {
+    expect(board.receiveAttack(null)).toBeFalsy();
+    expect(board.receiveAttack("")).toBeFalsy();
+    expect(board.receiveAttack(5)).toBeFalsy();
+    expect(board.receiveAttack()).toBeFalsy();
+  });
+});
