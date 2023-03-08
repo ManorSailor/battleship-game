@@ -7,7 +7,7 @@ class Gameboard {
     this.#size = size;
     // Map<CoordStr: bool> - `true` indicates a hit whereas `false` indicates a miss. Board is gradually built as game is played
     this.#board = new Map();
-    // Map<Coord[]: Warship> - For keeping track of the ships & their position
+    // Map<CoordStr: Warship> - For keeping track of the ships & their position
     this.#shipsMap = new Map();
   }
 
@@ -22,7 +22,7 @@ class Gameboard {
     if (this.#isCoordOccupied(startCoord)) return false;
 
     const shipCoords = Gameboard.#calcShipCoords(startCoord, ship.length);
-    this.#shipsMap.set(shipCoords, ship);
+    this.#shipsMap.set(shipCoords.toString(), ship);
     return shipCoords;
   }
 
@@ -50,23 +50,20 @@ class Gameboard {
 
   #isCoordOccupied(coord) {
     if (this.#shipsMap.size > 0) {
-      const occupiedCoords = Array.from(...this.#shipsMap.keys());
-      return occupiedCoords.some(([x, y]) => x === coord[0] && y === coord[1]);
+      const occupiedCoords = [...this.#shipsMap.keys()];
+      return occupiedCoords.some((shipCoord) => shipCoord.includes(coord.toString()));
     }
     return false;
   }
 
   #shipAt(coord) {
     if (this.#shipsMap.size > 0) {
-      const shipsData = [Array.from(...this.#shipsMap.entries())];
+      const shipsData = [...this.#shipsMap.entries()];
       
       // eslint-disable-next-line no-restricted-syntax
       for (const [coords, ship] of shipsData) {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const [x, y] of coords) {
-          if (x === coord[0] && y === coord[1]) {
-            return ship;
-          }
+        if (coords.includes(coord.toString())) {
+          return ship;
         }
       }
     }
