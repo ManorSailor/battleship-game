@@ -28,20 +28,20 @@ class Gameboard {
 
   receiveAttack(coord) {
     if (!this.#isCoordValid(coord))
-      return { attackStatus: false, shipHit: false };
+      return { attackSuccess: false, shipHit: false };
     if (this.#board.has(coord.toString()))
-      return { attackStatus: false, shipHit: false };
+      return { attackSuccess: false, shipHit: false };
 
     const ship = this.#shipAt(coord);
 
     if (ship) {
       ship.takeHit();
       this.#board.set(coord.toString(), true);
-      return { attackStatus: true, shipHit: true };
+      return { attackSuccess: true, shipHit: true };
     }
 
     this.#board.set(coord.toString(), false);
-    return { attackStatus: true, shipHit: false };
+    return { attackSuccess: true, shipHit: false };
   }
 
   allSunk() {

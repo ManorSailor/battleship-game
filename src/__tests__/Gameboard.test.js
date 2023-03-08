@@ -71,7 +71,7 @@ describe("Gameboard: receiveAttack", () => {
   const mockShip = { length: 3, takeHit: jest.fn() };
 
   it("receives attack at passed coordinate", () => {
-    const expectedResult = { attackStatus: true, shipHit: false };
+    const expectedResult = { attackSuccess: true, shipHit: false };
     expect(board.receiveAttack([3, 3])).toEqual(expectedResult);
   });
 
@@ -82,14 +82,14 @@ describe("Gameboard: receiveAttack", () => {
   });
 
   it("ignores attacks on previously attacked coordinates", () => {
-    const expectedResult = { attackStatus: false, shipHit: false };
+    const expectedResult = { attackSuccess: false, shipHit: false };
 
     expect(board.receiveAttack([3, 3])).toEqual(expectedResult);
     expect(board.receiveAttack([1, 0])).toEqual(expectedResult);
   });
 
   it("ignores invalid coordinates", () => {
-    const expectedResult = { attackStatus: false, shipHit: false };
+    const expectedResult = { attackSuccess: false, shipHit: false };
 
     expect(board.receiveAttack(null)).toEqual(expectedResult);
     expect(board.receiveAttack("")).toEqual(expectedResult);
