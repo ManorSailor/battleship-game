@@ -71,7 +71,8 @@ describe("Gameboard: receiveAttack", () => {
   const mockShip = { length: 3, takeHit: jest.fn() };
 
   it("receives attack at passed coordinate", () => {
-    expect(board.receiveAttack([3, 3])).toBeTruthy();
+    const expectedResult = { attackStatus: true, shipHit: false };
+    expect(board.receiveAttack([3, 3])).toEqual(expectedResult);
   });
 
   it("notify the ship of hit if it exist at the passed coordinate", () => {
@@ -81,15 +82,19 @@ describe("Gameboard: receiveAttack", () => {
   });
 
   it("ignores attacks on previously attacked coordinates", () => {
-    expect(board.receiveAttack([3, 3])).toBeFalsy();
-    expect(board.receiveAttack([1, 0])).toBeFalsy();
+    const expectedResult = { attackStatus: false, shipHit: false };
+
+    expect(board.receiveAttack([3, 3])).toEqual(expectedResult);
+    expect(board.receiveAttack([1, 0])).toEqual(expectedResult);
   });
 
   it("ignores invalid coordinates", () => {
-    expect(board.receiveAttack(null)).toBeFalsy();
-    expect(board.receiveAttack("")).toBeFalsy();
-    expect(board.receiveAttack(5)).toBeFalsy();
-    expect(board.receiveAttack()).toBeFalsy();
+    const expectedResult = { attackStatus: false, shipHit: false };
+
+    expect(board.receiveAttack(null)).toEqual(expectedResult);
+    expect(board.receiveAttack("")).toEqual(expectedResult);
+    expect(board.receiveAttack(5)).toEqual(expectedResult);
+    expect(board.receiveAttack()).toEqual(expectedResult);
   });
 });
 

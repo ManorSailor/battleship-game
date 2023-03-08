@@ -27,25 +27,27 @@ class Gameboard {
   }
 
   receiveAttack(coord) {
-    if (!this.#isCoordValid(coord)) return false;
-    if (this.#board.has(coord.toString())) return false;
+    if (!this.#isCoordValid(coord))
+      return { attackStatus: false, shipHit: false };
+    if (this.#board.has(coord.toString()))
+      return { attackStatus: false, shipHit: false };
 
     const ship = this.#shipAt(coord);
-    
+
     if (ship) {
       ship.takeHit();
       this.#board.set(coord.toString(), true);
-      return true;
+      return { attackStatus: true, shipHit: true };
     }
 
     this.#board.set(coord.toString(), false);
-    return true;
+    return { attackStatus: true, shipHit: false };
   }
 
   allSunk() {
     if (this.#shipsMap.size > 0) {
       const ships = [...this.#shipsMap.values()];
-      return ships.every(ship => ship.hasSunk());
+      return ships.every((ship) => ship.hasSunk());
     }
     return true;
   }
@@ -59,7 +61,9 @@ class Gameboard {
   #isCoordOccupied(coord) {
     if (this.#shipsMap.size > 0) {
       const occupiedCoords = [...this.#shipsMap.keys()];
-      return occupiedCoords.some((shipCoord) => shipCoord.includes(coord.toString()));
+      return occupiedCoords.some((shipCoord) =>
+        shipCoord.includes(coord.toString())
+      );
     }
     return false;
   }
@@ -67,7 +71,7 @@ class Gameboard {
   #shipAt(coord) {
     if (this.#shipsMap.size > 0) {
       const shipsData = [...this.#shipsMap.entries()];
-      
+
       // eslint-disable-next-line no-restricted-syntax
       for (const [coords, ship] of shipsData) {
         if (coords.includes(coord.toString())) {
@@ -75,7 +79,7 @@ class Gameboard {
         }
       }
     }
-    
+
     return false;
   }
 
