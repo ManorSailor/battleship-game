@@ -10,6 +10,7 @@ describe("Gameboard", () => {
     expect(board).toMatchObject({
       placeShip: expect.any(Function),
       receiveAttack: expect.any(Function),
+      allSunk: expect.any(Function),
     });
   });
 
@@ -89,5 +90,25 @@ describe("Gameboard: receiveAttack", () => {
     expect(board.receiveAttack("")).toBeFalsy();
     expect(board.receiveAttack(5)).toBeFalsy();
     expect(board.receiveAttack()).toBeFalsy();
+  });
+});
+
+describe("Gameboard: allSunk", () => {
+  const board = Gameboard.newBoard(boardInfo);
+
+  // Create an array of ships which are already destroyed
+  const stubShips = Array(3).fill({ length: 1, hasSunk: () => true });
+
+  // Place them on the board
+  stubShips.forEach((stubShip, i) => board.placeShip(stubShip, [i, i]));
+
+  it("returns true when all ships are destroyed", () => {
+    expect(board.allSunk()).toBeTruthy();
+  });
+
+  it("returns false when at least a single ship is alive", () => {
+    // Add a ship which is alive
+    board.placeShip({ length: 1, hasSunk: () => false }, [4, 4]);
+    expect(board.allSunk()).toBeFalsy();
   });
 });

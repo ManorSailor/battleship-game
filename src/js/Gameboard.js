@@ -42,6 +42,14 @@ class Gameboard {
     return true;
   }
 
+  allSunk() {
+    if (this.#shipsMap.size > 0) {
+      const ships = [...this.#shipsMap.values()];
+      return ships.every(ship => ship.hasSunk());
+    }
+    return true;
+  }
+
   #isCoordValid(coord) {
     const [x = -1, y = -1] = Array.isArray(coord) ? coord : [];
     const isBounded = (n) => n >= 0 && n < this.#size;
