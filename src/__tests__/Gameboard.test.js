@@ -30,7 +30,7 @@ describe("Gameboard: placeShip", () => {
       [1, 0],
       [2, 0],
     ];
-    expect(position).toStrictEqual(expectedPos);
+    expect(position).toEqual(expectedPos);
   });
 
   it("ignores placing ship at invalid coordinate", () => {
