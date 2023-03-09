@@ -19,9 +19,13 @@ class Gameboard {
     if (!this.#isCoordValid(startCoord)) return false;
     if (!this.#isCoordValid([startCoord[0] + ship.length - 1, 0])) return false;
     if (!this.#isCoordValid([0, startCoord[1] + ship.length - 1])) return false;
-    if (this.#isCoordOccupied(startCoord)) return false;
 
     const shipCoords = Gameboard.#calcShipCoords(startCoord, ship.length);
+
+    const isOverlapping = shipCoords.some((coord) => this.#isCoordOccupied(coord));
+
+    if (isOverlapping) return false;
+
     this.#shipsMap.set(shipCoords.toString(), ship);
     return shipCoords;
   }
