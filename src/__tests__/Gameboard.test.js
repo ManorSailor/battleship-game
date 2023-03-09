@@ -45,7 +45,7 @@ describe("Gameboard: placeShip", () => {
     expect(board.placeShip(ship, outOfBounds)).toBeFalsy();
   });
 
-  it("ignores placing ship at out of bounds coordinate (edge case)", () => {
+  it("ignores placing ship when a ship is partially out of bounds", () => {
     const edgeCaseX = [8, 0];
     const edgeCaseY = [0, 8];
 
@@ -57,7 +57,7 @@ describe("Gameboard: placeShip", () => {
     expect(board.placeShip(ship, [0, 0])).toBeFalsy();
   });
 
-  it("ignores placing ship at an occupied coordinate (edge case)", () => {
+  it("ignores placing ship when it overlaps another ship", () => {
     const occupiedCoord1 = [1, 0];
     const occupiedCoord2 = [2, 0];
 
