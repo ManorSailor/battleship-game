@@ -53,6 +53,11 @@ describe("Gameboard: placeShip", () => {
     expect(board.placeShip(fakeShip, [2, 0])).toBeFalsy();
     expect(board.placeShip(fakeShip, [3, 0])).toBeFalsy();
   });
+
+  it("ignores placing ship when it overlaps another ship", () => {
+    const mockShip = { length: 5 };
+    expect(board.placeShip(mockShip, [0, 0])).toBeFalsy();
+  });
 });
 
 describe("Gameboard: receiveAttack", () => {
