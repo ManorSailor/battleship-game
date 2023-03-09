@@ -48,16 +48,10 @@ describe("Gameboard: placeShip", () => {
     expect(board.placeShip(fakeShip, edgeCaseY)).toBeFalsy();
   });
 
-  it("ignores placing ship at an occupied coordinate", () => {
-    expect(board.placeShip(fakeShip, [0, 0])).toBeFalsy();
-  });
-
-  it("ignores placing ship when it overlaps another ship", () => {
-    const occupiedCoord1 = [1, 0];
-    const occupiedCoord2 = [2, 0];
-
-    expect(board.placeShip(fakeShip, occupiedCoord1)).toBeFalsy();
-    expect(board.placeShip(fakeShip, occupiedCoord2)).toBeFalsy();
+  it("ignores placing ship at occupied coordinates", () => {
+    expect(board.placeShip(fakeShip, [1, 0])).toBeFalsy();
+    expect(board.placeShip(fakeShip, [2, 0])).toBeFalsy();
+    expect(board.placeShip(fakeShip, [3, 0])).toBeFalsy();
   });
 });
 
