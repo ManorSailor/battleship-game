@@ -23,12 +23,8 @@ describe("Gameboard: placeShip", () => {
   const board = Gameboard.newBoard(boardInfo);
 
   it("places ship at valid coordinate by accounting for its length", () => {
-    const position = board.placeShip(fakeShip, [0, 0]);
-    const expectedPos = [
-      [0, 0],
-      [1, 0],
-      [2, 0],
-    ];
+    const position = board.placeShip(fakeShip, [1, 0]);
+    const expectedPos = [[1, 0], [2, 0], [3, 0]]; // prettier-ignore
     expect(position).toEqual(expectedPos);
   });
 
