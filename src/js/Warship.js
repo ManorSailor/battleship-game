@@ -3,10 +3,11 @@ class Warship {
   #health;
   #length;
 
-  constructor(name, health) {
+  constructor(name, health, position) {
     this.#name = name;
     this.#health = health;
     this.#length = health;
+    this.position = position;
   }
 
   get name() {
@@ -29,8 +30,8 @@ class Warship {
     if (this.#health > 0) this.#health--;
   }
 
-  static newShip({ name, health }) {
-    return new Warship(name, health);
+  static newShip({ name, health, position = null }) {
+    return new Warship(name, health, position);
   }
 }
 

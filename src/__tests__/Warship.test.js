@@ -14,6 +14,7 @@ describe("Warship", () => {
       name: expect.anything(),
       health: expect.anything(),
       length: expect.anything(),
+      position: expect.any(Object),
       takeHit: expect.any(Function),
       hasSunk: expect.any(Function),
     });
@@ -25,6 +26,15 @@ describe("Warship", () => {
 
   it("reports correct health", () => {
     expect(ship.health).toBe(shipInfo.health);
+  });
+
+  it("reports null position before setting position", () => {
+    expect(ship.position).toBeNull();
+  });
+
+  it("updates the position correctly", () => {
+    ship.position = [[0, 0]];
+    expect(ship.position).toEqual([[0, 0]]);
   });
 
   it("floats when health is above 0", () => {
