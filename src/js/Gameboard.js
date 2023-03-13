@@ -15,23 +15,16 @@ class Gameboard {
     return this.#size;
   }
 
-  canPlaceShip(ship, startCoord) {
-    if (!this.#isCoordValid(startCoord)) return false;
-    if (!this.#isCoordValid([startCoord[0] + ship.length - 1, 0])) return false;
-    if (!this.#isCoordValid([0, startCoord[1] + ship.length - 1])) return false;
+  canPlaceShip(ship, coord) {
+    if (!Gameboard.#isValidCoord(coord)) return false;
 
-    const shipCoords = Gameboard.#calcShipCoords(startCoord, ship.length);
-
-    const isOverlapping = shipCoords.some((coord) => this.#isCoordOccupied(coord));
-
-    if (isOverlapping) return false;
-
-    this.#shipsMap.set(shipCoords.toString(), ship);
-    return shipCoords;
+    return ship.orientation === "vertical"
+      ? this.#isVerticallyBounded(coord, ship.length)
+      : this.#isHorizontallyBounded(coord, ship.length);
   }
 
   canAttack(coord) {
-    if (!this.#isCoordValid(coord))
+    if (!Gameboard.#isValidCoord(coord))
       return { attackSuccess: false, shipHit: false };
     if (this.#board.has(coord.toString()))
       return { attackSuccess: false, shipHit: false };
@@ -48,10 +41,14 @@ class Gameboard {
     return { attackSuccess: true, shipHit: false };
   }
 
-  #isCoordValid(coord) {
-    const [x = -1, y = -1] = Array.isArray(coord) ? coord : [];
-    const isBounded = (n) => n >= 0 && n < this.#size;
-    return isBounded(x) && isBounded(y);
+  #isHorizontallyBounded(coord, length) {
+    const offsetX = coord[0] + length - 1;
+    return offsetX >= 0 && offsetX < this.#size;
+  }
+
+  #isVerticallyBounded(coord, length) {
+    const offsetY = coord[1] + length - 1;
+    return offsetY >= 0 && offsetY < this.#size;
   }
 
   #isCoordOccupied(coord) {
@@ -81,6 +78,10 @@ class Gameboard {
 
   static #calcShipCoords([x, y], shipLength) {
     return [...Array(shipLength).keys()].map((i) => [x + i, y]);
+  }
+
+  static #isValidCoord(coord) {
+    return Array.isArray(coord);
   }
 
   static new({ size = 10 }) {

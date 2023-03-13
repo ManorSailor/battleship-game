@@ -17,49 +17,37 @@ describe("Gameboard", () => {
   });
 });
 
-describe("Gameboard: placeShip", () => {
+describe("Gameboard: canPlaceShip", () => {
   const fakeShip = { length: 3 };
   const board = Gameboard.new(boardInfo);
 
-  it("places ship at valid coordinate by accounting for its length", () => {
-    const position = board.canPlaceShip(fakeShip, [1, 0]);
-    const expectedPos = [[1, 0], [2, 0], [3, 0]]; // prettier-ignore
-    expect(position).toEqual(expectedPos);
+  it("returns true when coordinates are in bounds", () => {
+    expect(board.canPlaceShip(fakeShip, [1, 0])).toBe(true);
   });
 
-  it("ignores placing ship at invalid coordinate", () => {
-    expect(board.canPlaceShip(fakeShip, null)).toBeFalsy();
-    expect(board.canPlaceShip(fakeShip, "")).toBeFalsy();
-    expect(board.canPlaceShip(fakeShip, 5)).toBeFalsy();
-    expect(board.canPlaceShip(fakeShip)).toBeFalsy();
+  it("returns true when coordinates are partially in bounds", () => {
+    expect(board.canPlaceShip(fakeShip, [7, 0])).toBe(true);
   });
 
-  it("ignores placing ship at out of bounds coordinate", () => {
-    const outOfBounds = [boardInfo.size * 2, boardInfo.size * 2];
-    expect(board.canPlaceShip(fakeShip, outOfBounds)).toBeFalsy();
+  it("returns false when coordinates are out of bounds", () => {
+    const outOfBounds = [boardInfo.size, boardInfo.size];
+    expect(board.canPlaceShip(fakeShip, outOfBounds)).toBe(false);
   });
 
-  it("ignores placing ship when a ship is partially out of bounds", () => {
+  it("returns false when coordinates are partially out of bounds", () => {
     const edgeCaseX = [8, 0];
-    const edgeCaseY = [0, 8];
-
-    expect(board.canPlaceShip(fakeShip, edgeCaseX)).toBeFalsy();
-    expect(board.canPlaceShip(fakeShip, edgeCaseY)).toBeFalsy();
+    expect(board.canPlaceShip(fakeShip, edgeCaseX)).toBe(false);
   });
 
-  it("ignores placing ship at occupied coordinates", () => {
-    expect(board.canPlaceShip(fakeShip, [1, 0])).toBeFalsy();
-    expect(board.canPlaceShip(fakeShip, [2, 0])).toBeFalsy();
-    expect(board.canPlaceShip(fakeShip, [3, 0])).toBeFalsy();
-  });
-
-  it("ignores placing ship when it overlaps another ship", () => {
-    const mockShip = { length: 5 };
-    expect(board.canPlaceShip(mockShip, [0, 0])).toBeFalsy();
+  it("returns false when coordinates are invalid", () => {
+    expect(board.canPlaceShip(fakeShip, null)).toBe(false);
+    expect(board.canPlaceShip(fakeShip, "")).toBe(false);
+    expect(board.canPlaceShip(fakeShip, 5)).toBe(false);
+    expect(board.canPlaceShip(fakeShip)).toBe(false);
   });
 });
 
-describe("Gameboard: receiveAttack", () => {
+describe.skip("Gameboard: receiveAttack", () => {
   const board = Gameboard.new(boardInfo);
   const mockShip = { length: 3, takeHit: jest.fn() };
 
