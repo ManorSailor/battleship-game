@@ -1,14 +1,11 @@
 class Gameboard {
   #size;
-  #board;
-  #shipsMap;
+  #attackedCoords;
 
   constructor(size) {
     this.#size = size;
-    // Map<CoordStr: bool> - `true` indicates a hit whereas `false` indicates a miss. Board is gradually built as game is played
-    this.#board = new Map();
-    // Map<CoordStr: Warship> - For keeping track of the ships & their position
-    this.#shipsMap = new Map();
+    // Set<Coord: string> - List of coordinates which have been attacked
+    this.#attackedCoords = new Set();
   }
 
   get size() {
@@ -24,21 +21,15 @@ class Gameboard {
   }
 
   canAttack(coord) {
-    if (!Gameboard.#isValidCoord(coord))
-      return { attackSuccess: false, shipHit: false };
-    if (this.#board.has(coord.toString()))
-      return { attackSuccess: false, shipHit: false };
+    if (!Gameboard.#isValidCoord(coord) || this.#hasAttacked(coord))
+      return false;
 
-    const ship = this.#shipAt(coord);
+    this.#attackedCoords.add(coord.toString());
+    return true;
+  }
 
-    if (ship) {
-      ship.takeHit();
-      this.#board.set(coord.toString(), true);
-      return { attackSuccess: true, shipHit: true };
-    }
-
-    this.#board.set(coord.toString(), false);
-    return { attackSuccess: true, shipHit: false };
+  #hasAttacked(coord) {
+    return this.#attackedCoords.has(coord.toString());
   }
 
   #isHorizontallyBounded(coord, length) {
@@ -49,35 +40,6 @@ class Gameboard {
   #isVerticallyBounded(coord, length) {
     const offsetY = coord[1] + length - 1;
     return offsetY >= 0 && offsetY < this.#size;
-  }
-
-  #isCoordOccupied(coord) {
-    if (this.#shipsMap.size > 0) {
-      const occupiedCoords = [...this.#shipsMap.keys()];
-      return occupiedCoords.some((shipCoord) =>
-        shipCoord.includes(coord.toString())
-      );
-    }
-    return false;
-  }
-
-  #shipAt(coord) {
-    if (this.#shipsMap.size > 0) {
-      const shipsData = [...this.#shipsMap.entries()];
-
-      // eslint-disable-next-line no-restricted-syntax
-      for (const [coords, ship] of shipsData) {
-        if (coords.includes(coord.toString())) {
-          return ship;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  static #calcShipCoords([x, y], shipLength) {
-    return [...Array(shipLength).keys()].map((i) => [x + i, y]);
   }
 
   static #isValidCoord(coord) {

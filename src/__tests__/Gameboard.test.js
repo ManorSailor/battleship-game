@@ -47,34 +47,21 @@ describe("Gameboard: canPlaceShip", () => {
   });
 });
 
-describe.skip("Gameboard: receiveAttack", () => {
+describe("Gameboard: canAttack", () => {
   const board = Gameboard.new(boardInfo);
-  const mockShip = { length: 3, takeHit: jest.fn() };
 
-  it("receives attack at passed coordinate", () => {
-    const expectedResult = { attackSuccess: true, shipHit: false };
-    expect(board.canAttack([3, 3])).toEqual(expectedResult);
+  it("allows attack on coordinate", () => {
+    expect(board.canAttack([3, 3])).toBe(true);
   });
 
-  it("notify the ship of hit if it exist at the passed coordinate", () => {
-    board.canPlaceShip(mockShip, [1, 0]);
-    board.canAttack([1, 0]);
-    expect(mockShip.takeHit).toHaveBeenCalled();
-  });
-
-  it("ignores attacks on previously attacked coordinates", () => {
-    const expectedResult = { attackSuccess: false, shipHit: false };
-
-    expect(board.canAttack([3, 3])).toEqual(expectedResult);
-    expect(board.canAttack([1, 0])).toEqual(expectedResult);
+  it("ignores attacks on previously attacked coordinate", () => {
+    expect(board.canAttack([3, 3])).toBe(false);
   });
 
   it("ignores invalid coordinates", () => {
-    const expectedResult = { attackSuccess: false, shipHit: false };
-
-    expect(board.canAttack(null)).toEqual(expectedResult);
-    expect(board.canAttack("")).toEqual(expectedResult);
-    expect(board.canAttack(5)).toEqual(expectedResult);
-    expect(board.canAttack()).toEqual(expectedResult);
+    expect(board.canAttack(null)).toBe(false);
+    expect(board.canAttack("")).toBe(false);
+    expect(board.canAttack(5)).toBe(false);
+    expect(board.canAttack()).toBe(false);
   });
 });
