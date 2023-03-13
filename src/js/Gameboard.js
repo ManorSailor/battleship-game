@@ -15,7 +15,7 @@ class Gameboard {
     return this.#size;
   }
 
-  placeShip(ship, startCoord) {
+  canPlaceShip(ship, startCoord) {
     if (!this.#isCoordValid(startCoord)) return false;
     if (!this.#isCoordValid([startCoord[0] + ship.length - 1, 0])) return false;
     if (!this.#isCoordValid([0, startCoord[1] + ship.length - 1])) return false;
@@ -30,7 +30,7 @@ class Gameboard {
     return shipCoords;
   }
 
-  receiveAttack(coord) {
+  canAttack(coord) {
     if (!this.#isCoordValid(coord))
       return { attackSuccess: false, shipHit: false };
     if (this.#board.has(coord.toString()))
@@ -46,14 +46,6 @@ class Gameboard {
 
     this.#board.set(coord.toString(), false);
     return { attackSuccess: true, shipHit: false };
-  }
-
-  allSunk() {
-    if (this.#shipsMap.size > 0) {
-      const ships = [...this.#shipsMap.values()];
-      return ships.every((ship) => ship.hasSunk());
-    }
-    return true;
   }
 
   #isCoordValid(coord) {
@@ -91,7 +83,7 @@ class Gameboard {
     return [...Array(shipLength).keys()].map((i) => [x + i, y]);
   }
 
-  static newBoard({ size = 10 }) {
+  static new({ size = 10 }) {
     return new Gameboard(size);
   }
 }
