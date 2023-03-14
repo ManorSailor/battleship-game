@@ -63,3 +63,16 @@ describe("Warship", () => {
     expect(ship.health).not.toBeLessThan(0);
   });
 });
+
+describe("Warship: newFleet", () => {
+  const shipData = [
+    { name: "Ship 1", health: 3 },
+    { name: "Ship 2", health: 4 },
+  ];
+
+  it("generates a fleet correctly", () => {
+    Warship.newFleet(shipData).forEach((ship) =>
+      expect(ship).toBeInstanceOf(Warship)
+    );
+  });
+});

@@ -33,6 +33,14 @@ class Warship {
   static newShip({ name, health, position = null }) {
     return new Warship(name, health, position);
   }
+
+  /**
+   * @param {Array<{name: string, health: int}>} shipData - Array of generic objects containing ship data
+   * @returns {Warship[]}
+   */
+  static newFleet(shipData = []) {
+    return shipData.map((ship) => Warship.newShip(ship));
+  }
 }
 
 export default Warship;
