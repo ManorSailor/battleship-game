@@ -14,6 +14,7 @@ describe("ShipManager", () => {
       hasShipAt: expect.any(Function),
       hasDeployedFleet: expect.any(Function),
       hasFleetSunk: expect.any(Function),
+      getShip: expect.any(Function),
     });
   });
 

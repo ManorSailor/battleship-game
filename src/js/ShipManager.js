@@ -26,6 +26,15 @@ class ShipManager {
     return [...this.#deployedShips];
   }
 
+  /**
+   * Find a ship by name. Note: It only searches the Dock for that ship
+   * @param {string} shipName
+   * @returns {Warship | undefined}
+   */
+  getShip(shipName) {
+    return this.#dockedShips.get(shipName);
+  }
+
   deployShip() {}
 
   attackShipAt() {}
