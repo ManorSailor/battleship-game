@@ -58,7 +58,6 @@ class Warship {
    */
   setPosition(position) {
     if (!this.#position) {
-      console.log(position)
       this.#position = position;
     }
   }
