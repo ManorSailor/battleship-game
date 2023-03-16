@@ -32,11 +32,6 @@ describe("Warship", () => {
     expect(ship.position).toBeNull();
   });
 
-  it("updates the position correctly", () => {
-    ship.position = [[0, 0]];
-    expect(ship.position).toEqual([[0, 0]]);
-  });
-
   it("floats when health is above 0", () => {
     expect(ship.hasSunk()).toBeFalsy();
     expect(ship.health).toBeGreaterThan(0);
@@ -90,4 +85,18 @@ describe("Warship: generatePosition", () => {
   });
 
   it.todo("generates a vertical position correctly");
+});
+
+describe("Warship: setPosition", () => {
+  const ship = Warship.new({ name: "TestShip", health: 3 });
+
+  it("sets the position correctly", () => {
+    ship.setPosition([[0, 0]]);
+    expect(ship.position).toEqual([[0, 0]]);
+  });
+
+  it("ignores updating position", () => {
+    ship.setPosition([[4, 0]]);
+    expect(ship.position).not.toEqual([[4, 0]]);
+  });
 });
