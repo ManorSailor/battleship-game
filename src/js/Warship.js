@@ -33,16 +33,14 @@ class Warship {
   /**
    * Generate a ship position from the provided coordinate, 
    * @param {[x: int, y: int]} startCoord - Starting coordinate (inclusive)
-   * @param {function} isOverlapping - function to check if a generated coordinate overlaps with another coordinate
    * @returns {Array<[x: int, y: int]> | null}
    */
-  generatePosition(startCoord, isOverlapping) {
+  generatePosition(startCoord) {
     const position = [];
     const calcCoord = this.#getCoordEquation();
 
     for (let i = 0; i < this.#length; i++) {
       const coord = calcCoord(startCoord, i);
-      if (isOverlapping(coord)) return null;
       position.push(coord);
     }
 

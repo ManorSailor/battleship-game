@@ -90,9 +90,4 @@ describe("Warship: generatePosition", () => {
   });
 
   it.todo("generates a vertical position correctly");
-
-  it("ignores generating position when there is an overlap", () => {
-    const mockOverlapChecker = () => true;
-    expect(ship.generatePosition([0, 0], mockOverlapChecker)).toBeNull();
-  });
 });
