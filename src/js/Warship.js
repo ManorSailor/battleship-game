@@ -30,7 +30,7 @@ class Warship {
     if (this.#health > 0) this.#health--;
   }
 
-  static newShip({ name, health, position = null }) {
+  static new({ name, health, position = null }) {
     return new Warship(name, health, position);
   }
 
@@ -39,7 +39,7 @@ class Warship {
    * @returns {Warship[]}
    */
   static newFleet(shipData = []) {
-    return shipData.map((ship) => Warship.newShip(ship));
+    return shipData.map((ship) => Warship.new(ship));
   }
 }
 

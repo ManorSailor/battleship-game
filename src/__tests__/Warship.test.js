@@ -6,7 +6,7 @@ describe("Warship", () => {
   let ship;
 
   beforeEach(() => {
-    ship = Warship.newShip(shipInfo);
+    ship = Warship.new(shipInfo);
   });
 
   it("has proper interface", () => {
