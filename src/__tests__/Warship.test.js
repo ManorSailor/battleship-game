@@ -6,7 +6,7 @@ describe("Warship", () => {
   let ship;
 
   beforeEach(() => {
-    ship = Warship.newShip(shipInfo);
+    ship = Warship.new(shipInfo);
   });
 
   it("has proper interface", () => {
@@ -74,5 +74,25 @@ describe("Warship: newFleet", () => {
     Warship.newFleet(shipData).forEach((ship) =>
       expect(ship).toBeInstanceOf(Warship)
     );
+  });
+});
+
+describe("Warship: generatePosition", () => {
+  const ship = Warship.new({ name: "TestShip", health: 3 });
+
+  it("generates a horizontal position correctly", () => {
+    const mockOverlapChecker = () => false;
+    const expectedCoords = [[0, 0], [1, 0], [2, 0]]; // prettier-ignore
+
+    expect(ship.generatePosition([0, 0], mockOverlapChecker)).toEqual(
+      expectedCoords
+    );
+  });
+
+  it.todo("generates a vertical position correctly");
+
+  it("ignores generating position when there is an overlap", () => {
+    const mockOverlapChecker = () => true;
+    expect(ship.generatePosition([0, 0], mockOverlapChecker)).toBeNull();
   });
 });

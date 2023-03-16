@@ -30,7 +30,32 @@ class Warship {
     if (this.#health > 0) this.#health--;
   }
 
-  static newShip({ name, health, position = null }) {
+  /**
+   * Generate a ship position from the provided coordinate, 
+   * @param {[x: int, y: int]} startCoord - Starting coordinate (inclusive)
+   * @param {function} isOverlapping - function to check if a generated coordinate overlaps with another coordinate
+   * @returns {Array<[x: int, y: int]> | null}
+   */
+  generatePosition(startCoord, isOverlapping) {
+    const position = [];
+    const calcCoord = this.#getCoordEquation();
+
+    for (let i = 0; i < this.#length; i++) {
+      const coord = calcCoord(startCoord, i);
+      if (isOverlapping(coord)) return null;
+      position.push(coord);
+    }
+
+    return position;
+  }
+
+  #getCoordEquation() {
+    return this.orientation === "vertical"
+      ? ([x, y], offset) => [x, y + offset]
+      : ([x, y], offset) => [x + offset, y];
+  }
+
+  static new({ name, health, position = null }) {
     return new Warship(name, health, position);
   }
 
@@ -39,7 +64,7 @@ class Warship {
    * @returns {Warship[]}
    */
   static newFleet(shipData = []) {
-    return shipData.map((ship) => Warship.newShip(ship));
+    return shipData.map((ship) => Warship.new(ship));
   }
 }
 
