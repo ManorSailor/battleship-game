@@ -2,12 +2,13 @@ class Warship {
   #name;
   #health;
   #length;
+  #position;
 
   constructor(name, health, position) {
     this.#name = name;
     this.#health = health;
     this.#length = health;
-    this.position = position;
+    this.#position = position;
   }
 
   get name() {
@@ -22,6 +23,10 @@ class Warship {
     return this.#length;
   }
 
+  get position() {
+    return this.#position;
+  }
+
   hasSunk() {
     return this.#health === 0;
   }
@@ -31,7 +36,7 @@ class Warship {
   }
 
   /**
-   * Generate a ship position from the provided coordinate, 
+   * Generate a ship position from the provided coordinate,
    * @param {[x: int, y: int]} startCoord - Starting coordinate (inclusive)
    * @returns {Array<[x: int, y: int]> | null}
    */
@@ -45,6 +50,17 @@ class Warship {
     }
 
     return position;
+  }
+
+  /**
+   * Set ship's position. Note: Ship's position cannot be changed
+   * @param {Array<[x: int, y: int]} position
+   */
+  setPosition(position) {
+    if (!this.#position) {
+      console.log(position)
+      this.#position = position;
+    }
   }
 
   #getCoordEquation() {
