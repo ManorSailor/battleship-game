@@ -180,3 +180,24 @@ describe("ShipManager: hasDeployedFleet", () => {
     expect(shipManager.hasDeployedFleet()).toBe(true);
   });
 });
+
+describe("ShipManager: hasDeployedFleet", () => {
+  const mockShip = {
+    name: "Sunk Mock Ship",
+    generatePosition: () => [[0, 0]], // prettier-ignore
+    setPosition: () => {},
+    takeHit: () => {},
+    hasSunk: () => true,
+  };
+  const shipManager = ShipManager.new([mockShip]);
+  shipManager.deployShip(mockShip.name, [0, 0]);
+
+  it("returns false when ship(s) are afloat", () => {
+    expect(shipManager.hasFleetSunk()).toBe(false);
+  });
+
+  it("returns true when fleet has sunk", () => {
+    shipManager.attackShipAt([0, 0]);
+    expect(shipManager.hasFleetSunk()).toBe(true);
+  });
+});

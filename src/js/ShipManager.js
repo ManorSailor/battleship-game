@@ -57,6 +57,14 @@ class ShipManager {
   }
 
   /**
+   * Determines whether the fleet has sunk
+   * @returns {boolean}
+   */
+  hasFleetSunk() {
+    return this.#deployedShips.length === 0;
+  }
+
+  /**
    * Deploy a ship to provided coordinate
    * @param {string} shipName
    * @param {[x: int, y: int]} startCoord
@@ -88,8 +96,6 @@ class ShipManager {
 
     return { shipHit: false };
   }
-
-  hasFleetSunk() {}
 
   #populateDock(ships) {
     const fleet = ships ?? Warship.newFleet(ShipManager.#defaultFleet);
