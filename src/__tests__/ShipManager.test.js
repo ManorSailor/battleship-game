@@ -71,6 +71,49 @@ describe("ShipManager: hasShipAt", () => {
   });
 });
 
+describe("ShipManager: deployShip", () => {
+  const mockShips = [
+    {
+      name: "MockShip",
+      generatePosition: () => [[1, 0], [2, 0], [3, 0]], // prettier-ignore
+      setPosition: jest.fn(),
+    },
+    {
+      name: "MockShip2",
+      generatePosition: () => [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]], // prettier-ignore
+      setPosition: jest.fn(),
+    },
+  ];
+  const shipManager = ShipManager.new(mockShips);
+
+  it("deploys a ship correctly", () => {
+    expect(shipManager.deployShip(mockShips[0].name, [1, 0])).toBe(true);
+  });
+
+  it("deployed ship is no longer at docks", () => {
+    expect(shipManager.dockedShips).not.toContainEqual(mockShips[0]);
+  });
+
+  it("deployed ship has moved to target location", () => {
+    expect(shipManager.deployedShips).toContainEqual(mockShips[0]);
+  });
+
+  it("notifies the ship of deployment", () => {
+    // this is an example of Outgoing Command! Sandi Metz tips have been quite helpful
+    expect(mockShips[0].setPosition).toHaveBeenCalledTimes(1);
+  });
+
+  it("ignores deployment if there is an overlap", () => {
+    expect(shipManager.deployShip(mockShips[1].name, [0, 0])).toBe(false);
+    expect(shipManager.deployShip(mockShips[1].name, [1, 0])).toBe(false);
+    expect(shipManager.deployShip(mockShips[1].name, [2, 0])).toBe(false);
+    expect(shipManager.deployShip(mockShips[1].name, [3, 0])).toBe(false);
+  });
+
+  it("ignores deployment if ship is not at docks", () => {
+    expect(shipManager.deployShip("DoesNotExist", [4, 4])).toBe(false);
+  });
+});
 
 // describe.skip("ShipManager: attackShipAt", () => {
 //   const board = ShipManager.new();

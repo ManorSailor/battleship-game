@@ -48,7 +48,24 @@ class ShipManager {
     return null;
   }
 
+  /**
+   * Deploy a ship to provided coordinate
+   * @param {string} shipName
+   * @param {[x: int, y: int]} startCoord
+   * @returns {boolean}
+   */
+  deployShip(shipName, startCoord) {
+    const ship = this.getShip(shipName);
+    const position = ship?.generatePosition(startCoord);
 
+    if (this.hasShipAt(position) || this.hasShipAt(position) === null)
+      return false;
+
+    this.#moveShipTo(ship, position);
+    return true;
+  }
+
+  attackShipAt() {}
 
   hasDeployedFleet() {}
 
@@ -63,6 +80,20 @@ class ShipManager {
     }, new Map());
 
     this.#dockedShips = dockedShips;
+  }
+
+  /**
+   * Move a ship from Dock to Ocean, placing it at provided position
+   * @param {Warship} ship
+   * @param {Array<[x: int, y: int]>} position
+   */
+  #moveShipTo(ship, position) {
+    this.#dockedShips.delete(ship.name);
+    position.forEach((coord) =>
+      this.#occupiedCoords.set(coord.toString(), ship)
+    );
+    this.#deployedShips.push(ship);
+    ship.setPosition(position);
   }
 
   /**
