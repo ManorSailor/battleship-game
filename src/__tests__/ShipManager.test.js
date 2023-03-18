@@ -115,22 +115,51 @@ describe("ShipManager: deployShip", () => {
   });
 });
 
-// describe.skip("ShipManager: attackShipAt", () => {
-//   const board = ShipManager.new();
-//   // const mockShip = { length: 3, takeHit: jest.fn() };
+describe("ShipManager: attackShipAt", () => {
+  const mockShips = [
+    {
+      name: "Sunk Mock Ship",
+      generatePosition: () => [[0, 0], [1, 0], [2, 0]], // prettier-ignore
+      setPosition: () => {},
+      takeHit: jest.fn(),
+      hasSunk: () => true,
+    },
+    {
+      name: "Afloat Mock Ship",
+      generatePosition: () => [[1, 1], [2, 1], [7, 1]], // prettier-ignore
+      setPosition: () => {},
+      takeHit: jest.fn(),
+      hasSunk: () => false,
+    },
+  ];
+  const shipManager = ShipManager.new(mockShips);
+  mockShips.forEach((mockShip, i) => shipManager.deployShip(mockShip.name, [i, i]));
 
-//   it("receives attack at passed coordinate", () => {
-//     const expectedResult = { attackSuccess: true, shipHit: false };
-//     expect(board.receiveAttack([3, 3])).toEqual(expectedResult);
-//   });
+  it("attacks ship if it exists at the coordinate", () => {
+    const expectedResult = {
+      shipHit: true,
+      shipName: mockShips[0].name,
+      shipSunk: mockShips[0].hasSunk(),
+    };
+    expect(shipManager.attackShipAt([0, 0])).toEqual(expectedResult);
+  });
 
-//   it("ignores attacks on previously attacked coordinates", () => {
-//     const expectedResult = { attackSuccess: false, shipHit: false };
+  it("ignores attack if ship doesn't exist at the coordinate", () => {
+    expect(shipManager.attackShipAt([4, 4])).toEqual({ shipHit: false });
+  });
 
-//     expect(board.receiveAttack([3, 3])).toEqual(expectedResult);
-//     expect(board.receiveAttack([1, 0])).toEqual(expectedResult);
-//   });
-// });
+  it("notify the ship of attack", () => {
+    expect(mockShips[0].takeHit).toHaveBeenCalledTimes(1);
+  });
+
+  it("sunk ships are not counted as deployed", () => {
+    expect(shipManager.deployedShips).not.toContainEqual(mockShips[0]);
+  });
+
+  it("afloat ships are counted as deployed", () => {
+    expect(shipManager.deployedShips).toContainEqual(mockShips[1]);
+  });
+});
 
 // describe.skip("ShipManager: hasDeployedFleet", () => {
 //   const shipManager = ShipManager.new();

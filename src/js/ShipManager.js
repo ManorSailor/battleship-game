@@ -65,7 +65,21 @@ class ShipManager {
     return true;
   }
 
-  attackShipAt() {}
+  /**
+   * Attacks a ship if it exist at provided coordinate
+   * @param {[x: int, y: int]} coord
+   * @returns {{shipHit: boolean, shipName: string | undefined, shipSunk: boolean | undefined}}
+   */
+  attackShipAt(coord) {
+    const ship = this.#getShipAt(coord);
+
+    if (ship) {
+      this.#hitShip(ship);
+      return { shipHit: true, shipName: ship.name, shipSunk: ship.hasSunk() };
+    }
+
+    return { shipHit: false };
+  }
 
   hasDeployedFleet() {}
 
@@ -94,6 +108,29 @@ class ShipManager {
     );
     this.#deployedShips.push(ship);
     ship.setPosition(position);
+  }
+
+  /**
+   * Finds a ship if it exists at provided coordinate
+   * @param {[x: int, y: int]} coord
+   * @returns {Warship | undefined}
+   */
+  #getShipAt(coord) {
+    return this.#occupiedCoords.get(coord.toString());
+  }
+
+  /**
+   * Hits the passed ship, removing it from the ocean if sunk
+   * @param {Warship} ship
+   */
+  #hitShip(ship) {
+    ship.takeHit();
+    
+    if (ship.hasSunk()) {
+      this.#deployedShips = this.#deployedShips.filter(
+        (depShip) => depShip.name !== ship.name
+      );
+    }
   }
 
   /**
