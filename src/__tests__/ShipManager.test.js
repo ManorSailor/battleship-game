@@ -133,7 +133,9 @@ describe("ShipManager: attackShipAt", () => {
     },
   ];
   const shipManager = ShipManager.new(mockShips);
-  mockShips.forEach((mockShip, i) => shipManager.deployShip(mockShip.name, [i, i]));
+  mockShips.forEach((mockShip, i) =>
+    shipManager.deployShip(mockShip.name, [i, i])
+  );
 
   it("attacks ship if it exists at the coordinate", () => {
     const expectedResult = {
@@ -161,22 +163,20 @@ describe("ShipManager: attackShipAt", () => {
   });
 });
 
-// describe.skip("ShipManager: hasDeployedFleet", () => {
-//   const shipManager = ShipManager.new();
+describe("ShipManager: hasDeployedFleet", () => {
+  const mockShip = {
+    name: "Sunk Mock Ship",
+    generatePosition: () => [[0, 0], [1, 0], [2, 0]], // prettier-ignore
+    setPosition: () => {},
+  };
+  const shipManager = ShipManager.new([mockShip]);
 
-//   // Create an array of ships which are already destroyed
-//   const stubShips = Array(3).fill({ length: 1, hasSunk: () => true });
+  it("returns false when dock has ships", () => {
+    expect(shipManager.hasDeployedFleet()).toBe(false);
+  });
 
-//   // Place them on the board
-//   stubShips.forEach((stubShip, i) => shipManager.deployShip(stubShip, [i, i]));
-
-//   it("returns true when all ships are destroyed", () => {
-//     expect(shipManager.allSunk()).toBeTruthy();
-//   });
-
-//   it("returns false when at least a single ship is alive", () => {
-//     // Add a ship which is alive
-//     shipManager.deployShip({ length: 1, hasSunk: () => false }, [4, 4]);
-//     expect(shipManager.allSunk()).toBeFalsy();
-//   });
-// });
+  it("returns true when dock has no ships", () => {
+    shipManager.deployShip(mockShip.name, [0, 0]);
+    expect(shipManager.hasDeployedFleet()).toBe(true);
+  });
+});

@@ -49,6 +49,14 @@ class ShipManager {
   }
 
   /**
+   * Determines whether the fleet has been deployed
+   * @returns {boolean}
+   */
+  hasDeployedFleet() {
+    return this.#dockedShips.size === 0;
+  }
+
+  /**
    * Deploy a ship to provided coordinate
    * @param {string} shipName
    * @param {[x: int, y: int]} startCoord
@@ -80,8 +88,6 @@ class ShipManager {
 
     return { shipHit: false };
   }
-
-  hasDeployedFleet() {}
 
   hasFleetSunk() {}
 
@@ -125,7 +131,7 @@ class ShipManager {
    */
   #hitShip(ship) {
     ship.takeHit();
-    
+
     if (ship.hasSunk()) {
       this.#deployedShips = this.#deployedShips.filter(
         (depShip) => depShip.name !== ship.name
