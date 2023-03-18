@@ -35,27 +35,42 @@ describe("ShipManager", () => {
   });
 });
 
-// describe.skip("ShipManager: deployShip", () => {
-//   const fakeShip = { length: 3 };
-//   const shipManager = ShipManager.new();
+describe("ShipManager: hasShipAt", () => {
+  const mockShips = [
+    {
+      name: "MockShip",
+      generatePosition: () => [[1, 0], [2, 0], [3, 0]], // prettier-ignore
+      setPosition: jest.fn(),
+    },
+    {
+      name: "MockShip2",
+      generatePosition: () => [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]], // prettier-ignore
+      setPosition: jest.fn(),
+    },
+  ];
+  const shipManager = ShipManager.new(mockShips);
 
-//   it("places ship at valid coordinate by accounting for its length", () => {
-//     const position = shipManager.deployShip(fakeShip, [1, 0]);
-//     const expectedPos = [[1, 0], [2, 0], [3, 0]]; // prettier-ignore
-//     expect(position).toEqual(expectedPos);
-//   });
+  it("returns false when the coordinate is empty", () => {
+    expect(shipManager.hasShipAt([1, 0])).toBe(false);
+  });
 
-//   it("ignores placing ship at occupied coordinates", () => {
-//     expect(shipManager.deployShip(fakeShip, [1, 0])).toBeFalsy();
-//     expect(shipManager.deployShip(fakeShip, [2, 0])).toBeFalsy();
-//     expect(shipManager.deployShip(fakeShip, [3, 0])).toBeFalsy();
-//   });
+  it("returns true when a ship exist at a coordinate", () => {
+    shipManager.deployShip(mockShips[0].name, [1, 0]);
+    expect(shipManager.hasShipAt([1, 0])).toBe(true);
+  });
 
-//   it("ignores placing ship when it overlaps another ship", () => {
-//     const mockShip = { length: 5 };
-//     expect(shipManager.deployShip(mockShip, [0, 0])).toBeFalsy();
-//   });
-// });
+  it("returns true when a part of ship exist among the coordinates", () => {
+    expect(shipManager.hasShipAt(mockShips[1].generatePosition())).toBe(true);
+  });
+
+  it("ignores invalid coordinates", () => {
+    expect(shipManager.hasShipAt(null)).toBeNull();
+    expect(shipManager.hasShipAt([])).toBeNull();
+    expect(shipManager.hasShipAt("")).toBeNull();
+    expect(shipManager.hasShipAt()).toBeNull();
+  });
+});
+
 
 // describe.skip("ShipManager: attackShipAt", () => {
 //   const board = ShipManager.new();
@@ -71,26 +86,6 @@ describe("ShipManager", () => {
 
 //     expect(board.receiveAttack([3, 3])).toEqual(expectedResult);
 //     expect(board.receiveAttack([1, 0])).toEqual(expectedResult);
-//   });
-// });
-
-// describe.skip("ShipManager: hasShipAt", () => {
-//   const shipManager = ShipManager.new();
-
-//   // Create an array of ships which are already destroyed
-//   const stubShips = Array(3).fill({ length: 1, hasSunk: () => true });
-
-//   // Place them on the board
-//   stubShips.forEach((stubShip, i) => shipManager.deployShip(stubShip, [i, i]));
-
-//   it("returns true when all ships are destroyed", () => {
-//     expect(shipManager.allSunk()).toBeTruthy();
-//   });
-
-//   it("returns false when at least a single ship is alive", () => {
-//     // Add a ship which is alive
-//     shipManager.deployShip({ length: 1, hasSunk: () => false }, [4, 4]);
-//     expect(shipManager.allSunk()).toBeFalsy();
 //   });
 // });
 

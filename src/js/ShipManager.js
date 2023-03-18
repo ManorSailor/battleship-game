@@ -35,11 +35,20 @@ class ShipManager {
     return this.#dockedShips.get(shipName);
   }
 
-  deployShip() {}
+  /**
+   * Determines whether a ship exist at any of the provided coordinate(s)
+   * @param  {[x: int, y: int] | [x: int, y: int][]} coords
+   * @returns {boolean | null} returns null when coordinate(s) are invalid
+   */
+  hasShipAt(coords) {
+    if (Array.isArray(coords) && coords.length) {
+      coords = Array.isArray(coords[0]) ? coords : [coords];
+      return coords.some((coord) => this.#occupiedCoords.has(coord.toString()));
+    }
+    return null;
+  }
 
-  attackShipAt() {}
 
-  hasShipAt() {}
 
   hasDeployedFleet() {}
 
