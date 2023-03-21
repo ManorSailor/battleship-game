@@ -7,6 +7,7 @@ describe("Gameboard", () => {
 
   it("has proper public interface", () => {
     expect(board).toMatchObject({
+      size: expect.any(Number),
       canPlaceShip: expect.any(Function),
       canAttack: expect.any(Function),
     });

@@ -1,15 +1,10 @@
 class Gameboard {
-  #size;
   #attackedCoords;
 
   constructor(size) {
-    this.#size = size;
+    this.size = size;
     // Set<Coord: string> - List of coordinates which have been attacked
     this.#attackedCoords = new Set();
-  }
-
-  get size() {
-    return this.#size;
   }
 
   canPlaceShip(ship, coord) {
@@ -34,12 +29,12 @@ class Gameboard {
 
   #isHorizontallyBounded(coord, length) {
     const offsetX = coord[0] + length - 1;
-    return offsetX >= 0 && offsetX < this.#size;
+    return offsetX >= 0 && offsetX < this.size;
   }
 
   #isVerticallyBounded(coord, length) {
     const offsetY = coord[1] + length - 1;
-    return offsetY >= 0 && offsetY < this.#size;
+    return offsetY >= 0 && offsetY < this.size;
   }
 
   static #isValidCoord(coord) {
