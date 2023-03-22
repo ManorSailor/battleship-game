@@ -9,7 +9,7 @@ describe("Gameboard", () => {
     expect(board).toMatchObject({
       size: expect.any(Number),
       canPlaceShip: expect.any(Function),
-      canAttack: expect.any(Function),
+      canEnemyAttack: expect.any(Function),
     });
   });
 
@@ -48,21 +48,23 @@ describe("Gameboard: canPlaceShip", () => {
   });
 });
 
-describe("Gameboard: canAttack", () => {
+describe("Gameboard: canEnemyAttack", () => {
   const board = Gameboard.new(boardInfo);
 
-  it("allows attack on coordinate", () => {
-    expect(board.canAttack([3, 3])).toBe(true);
+  it("receives attack on coordinate", () => {
+    expect(board.canEnemyAttack([3, 3])).toMatchObject({ attackSuccess: true });
   });
 
   it("ignores attacks on previously attacked coordinate", () => {
-    expect(board.canAttack([3, 3])).toBe(false);
+    const expectedResult = { attackSuccess: false };
+    expect(board.canEnemyAttack([3, 3])).toMatchObject(expectedResult);
   });
 
   it("ignores invalid coordinates", () => {
-    expect(board.canAttack(null)).toBe(false);
-    expect(board.canAttack("")).toBe(false);
-    expect(board.canAttack(5)).toBe(false);
-    expect(board.canAttack()).toBe(false);
+    const expectedResult = { attackSuccess: false };
+    expect(board.canEnemyAttack(null)).toMatchObject(expectedResult);
+    expect(board.canEnemyAttack("")).toMatchObject(expectedResult);
+    expect(board.canEnemyAttack(5)).toMatchObject(expectedResult);
+    expect(board.canEnemyAttack()).toMatchObject(expectedResult);
   });
 });

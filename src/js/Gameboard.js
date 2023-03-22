@@ -15,11 +15,12 @@ class Gameboard {
       : this.#isHorizontallyBounded(coord, ship.length);
   }
 
-  canAttack(coord) {
-    if (!Array.isArray(coord) || this.#hasAttacked(coord)) return false;
+  canEnemyAttack(coord) {
+    if (!Array.isArray(coord) || this.#hasAttacked(coord))
+      return { attackSuccess: false, coord };
 
     this.#enemyAttacks.add(coord.toString());
-    return true;
+    return { attackSuccess: true, coord };
   }
 
   #hasAttacked(coord) {
