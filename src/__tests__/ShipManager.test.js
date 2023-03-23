@@ -15,6 +15,7 @@ describe("ShipManager", () => {
       hasDeployedFleet: expect.any(Function),
       hasFleetSunk: expect.any(Function),
       getShip: expect.any(Function),
+      getRandomShip: expect.any(Function),
     });
   });
 
@@ -199,5 +200,30 @@ describe("ShipManager: hasDeployedFleet", () => {
   it("returns true when fleet has sunk", () => {
     shipManager.attackShipAt([0, 0]);
     expect(shipManager.hasFleetSunk()).toBe(true);
+  });
+});
+
+describe("ShipManager: getRandomShip", () => {
+  const mockShips = [
+    {
+      name: "Mock Ship",
+      generatePosition: () => [[0, 0]], // prettier-ignore
+      setPosition: () => {},
+    },
+    {
+      name: "Mock Ship 2",
+      generatePosition: () => [[1, 1]], // prettier-ignore
+      setPosition: () => {},
+    },
+  ];
+  const shipManager = ShipManager.new(mockShips);
+
+  it("returns a random ship", () => {
+    expect(mockShips).toContainEqual(shipManager.getRandomShip());
+  });
+
+  it("returns undefined when there are no docked ships", () => {
+    mockShips.forEach((ship, i) => shipManager.deployShip(ship.name, [i, i]));
+    expect(shipManager.getRandomShip()).toBeUndefined();
   });
 });

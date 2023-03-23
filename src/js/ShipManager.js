@@ -27,6 +27,15 @@ class ShipManager {
   }
 
   /**
+   * Returns a random ship. Note: Only looks at the Docks
+   * @returns {Warship | undefined}
+   */
+  getRandomShip() {
+    const ships = this.dockedShips;
+    return ships.at(Math.random() * ships.length);
+  }
+
+  /**
    * Find a ship by name. Note: It only searches the Dock for that ship
    * @param {string} shipName
    * @returns {Warship | undefined}
