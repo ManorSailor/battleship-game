@@ -61,9 +61,11 @@ class Player {
         Math.floor(Math.random() * this.#board.size),
       ];
 
-      const placed = this.placeShip(ship.name, coord);
-      if (placed) {
-        ship = this.#shipManager.getRandomShip();
+      if (this.#board.canPlaceShip(ship, coord)) {
+        const placed = this.placeShip(ship.name, coord);
+        if (placed) {
+          ship = this.#shipManager.getRandomShip();
+        }
       }
     }
   }
