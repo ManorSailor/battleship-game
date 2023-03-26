@@ -13,11 +13,11 @@
 :root {
   --bg-clr: #fbfbfb;
   --fg-clr: #e6e6e6;
-  --hit-clr: #cf9fff;
-  --miss-clr: #808080;
   --txt-clr: #000000;
   --fg-clr-alt: #f0f0f0;
-  --win-clr: #cf9fff;
+  --hit-clr: #cf9fff;
+  --miss-clr: #808080;
+  --ship-clr: #5ebddb;
 
   --ff-text: "Quicksand", "sans-serif";
 
@@ -76,6 +76,10 @@ li {
 
 .miss {
   background-color: var(--miss-clr);
+}
+
+.has-ship {
+  background-color: var(--ship-clr) !important;
 }
 
 /* ================ Components ================ */
