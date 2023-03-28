@@ -82,6 +82,13 @@ li {
   background-color: var(--ship-clr) !important;
 }
 
+.btn {
+  border: var(--btn-border);
+  border-radius: var(--btn-radius);
+  padding: 0.5em 0.75em;
+  cursor: pointer;
+}
+
 /* ================ Components ================ */
 .game-container {
   display: flex;
@@ -134,4 +141,23 @@ li {
 
 .cell:hover {
   background-color: var(--fg-clr);
+}
+
+.placeship-container {
+  flex-grow: 1;
+  gap: var(--gutter);
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.board-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0.75rem;
+}
+
+.placeship-header {
+  text-align: center;
+  font-size: var(--fs-lg);
 }
