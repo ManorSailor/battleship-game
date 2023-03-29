@@ -144,17 +144,19 @@ li {
 }
 
 .placeship-container {
-  flex-grow: 1;
-  gap: var(--gutter);
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
+ display: flex;
+ justify-content: space-evenly;
 }
 
-.board-actions {
+.game-actions {
   display: flex;
-  justify-content: space-around;
-  margin-top: 0.75rem;
+  gap: calc(var(--gutter) / 1.45);
+  justify-content: space-between;
+
+  box-shadow: var(--shadow);
+  margin-top: var(--gutter);
+  border-radius: var(--board-radius);
+  padding: calc(var(--gutter) / 1.45);
 }
 
 .placeship-header {
