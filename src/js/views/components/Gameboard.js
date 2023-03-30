@@ -10,9 +10,24 @@ export default function Gameboard(boardState, boardHeader) {
   const getCell = (coord) =>
     innerBoard.querySelector(`li[data-coord="${coord}"]`);
 
+  const resetBoard = () =>
+    innerBoard.replaceChildren(...generateCells(boardState));
+
+  const updateHeader = (newBoardHeader = boardHeader) => {
+    outerBoard.querySelector("h3.board-header").textContent = newBoardHeader;
+  };
+
+  const updateBoard = (newBoardState, newBoardHeader) => {
+    innerBoard.replaceChildren(...generateCells(newBoardState));
+    updateHeader(newBoardHeader);
+  };
+
   return {
     getCell,
+    resetBoard,
+    updateBoard,
     addListener,
+    updateHeader,
     node: outerBoard,
   };
 }
