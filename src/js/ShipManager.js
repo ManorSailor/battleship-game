@@ -26,6 +26,10 @@ class ShipManager {
     return [...this.#deployedShips];
   }
 
+  get shipInTransit() {
+    return this.dockedShips.at(-1);
+  }
+
   /**
    * Returns a random ship. Note: Only looks at the Docks
    * @returns {Warship | undefined}
@@ -88,6 +92,22 @@ class ShipManager {
 
     this.#moveShipTo(ship, position);
     return true;
+  }
+
+  /**
+   * Performs a fake deployment of the provided ship. Note: Required for showing ship preview
+   * @param {string} shipName
+   * @param {[x: int, y: int]} startCoord
+   * @returns {[x: int, y: int][] | []}
+   */
+  fakeDeployShip(shipName, startCoord) {
+    const ship = this.getShip(shipName);
+    const position = ship?.generatePosition(startCoord);
+
+    if (this.hasShipAt(position) || this.hasShipAt(position) === null)
+      return [];
+
+    return position;
   }
 
   /**

@@ -34,6 +34,14 @@ describe("ShipManager", () => {
     expect(getter).toHaveBeenCalled();
     expect(deployedShips).toEqual([]);
   });
+
+  it("has a getter for the ship in transit", () => {
+    const getter = jest.spyOn(shipManager, "shipInTransit", "get");
+    const ship = shipManager.shipInTransit;
+
+    expect(getter).toHaveBeenCalled();
+    expect(ship).toEqual(testShips.at(-1));
+  });
 });
 
 describe("ShipManager: hasShipAt", () => {

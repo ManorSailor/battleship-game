@@ -18,6 +18,10 @@ class Player {
     };
   }
 
+  get shipInTransit() {
+    return this.#shipManager.shipInTransit;
+  }
+
   attack(enemy, coord) {
     return enemy.receiveAttack(coord);
   }
@@ -41,6 +45,13 @@ class Player {
     }
 
     return false;
+  }
+
+  fakePlaceShip(ship, coord) {
+    if (this.#board.canPlaceShip(ship, coord)) {
+      return this.#shipManager.fakeDeployShip(ship.name, coord);
+    }
+    return [];
   }
 
   hasDeployedFleet() {
