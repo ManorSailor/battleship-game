@@ -26,6 +26,10 @@ class ShipManager {
     return [...this.#deployedShips];
   }
 
+  get shipInTransit() {
+    return this.dockedShips.at(-1);
+  }
+
   /**
    * Returns a random ship. Note: Only looks at the Docks
    * @returns {Warship | undefined}
