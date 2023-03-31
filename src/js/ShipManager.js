@@ -95,6 +95,22 @@ class ShipManager {
   }
 
   /**
+   * Performs a fake deployment of the provided ship. Note: Required for showing ship preview
+   * @param {string} shipName
+   * @param {[x: int, y: int]} startCoord
+   * @returns {[x: int, y: int][] | []}
+   */
+  fakeDeployShip(shipName, startCoord) {
+    const ship = this.getShip(shipName);
+    const position = ship?.generatePosition(startCoord);
+
+    if (this.hasShipAt(position) || this.hasShipAt(position) === null)
+      return [];
+
+    return position;
+  }
+
+  /**
    * Attacks a ship if it exist at provided coordinate
    * @param {[x: int, y: int]} coord
    * @returns {{shipHit: boolean, shipName: string | undefined, shipSunk: boolean | undefined}}
