@@ -78,6 +78,11 @@ li {
   background-color: var(--miss-clr);
 }
 
+.ship-preview {
+  cursor: pointer;
+  background-color: var(--fg-clr);
+}
+
 .has-ship {
   background-color: var(--ship-clr) !important;
 }
@@ -143,18 +148,20 @@ li {
   background-color: var(--fg-clr);
 }
 
-.placeship-container {
- display: flex;
- justify-content: space-evenly;
+.placeship-view {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .game-actions {
+  max-width: fit-content;
+
   display: flex;
   gap: calc(var(--gutter) / 1.45);
   justify-content: space-between;
 
   box-shadow: var(--shadow);
-  margin-top: var(--gutter);
+  margin: var(--gutter) auto 0 auto;
   border-radius: var(--board-radius);
   padding: calc(var(--gutter) / 1.45);
 }
