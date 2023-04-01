@@ -14,7 +14,6 @@ const Game = (() => {
   const gameEndView = GameEndView();
 
   const newGame = () => {
-    gameEndView.clear();
     bot = Bot.new();
     human = Player.new("Human");
     placementView = PlacementView(human.board, human.shipInTransit.name);
@@ -23,8 +22,10 @@ const Game = (() => {
     placementView.bindPlacementListener(placeShip);
     placementView.bindAutoplaceListener(autoplace);
     placementView.bindStartGameListener(startGame);
-    // placementView.bindResetGameListener(resetGame);
+    placementView.bindResetBoardListener(newGame);
 
+    gameEndView.clear();
+    placementView.clear();
     placementView.render();
   };
 
