@@ -1,5 +1,7 @@
 import Bot from "../Bot";
 import Player from "../Player";
+
+import GameEndView from "../views/GameEndView";
 import GameboardView from "../views/GameboardView";
 import PlacementView from "../views/PlacementView";
 
@@ -9,8 +11,10 @@ const Game = (() => {
   let bot;
   let botBoard;
   let placementView;
+  const gameEndView = GameEndView();
 
   const newGame = () => {
+    gameEndView.clear();
     bot = Bot.new();
     human = Player.new("Human");
     placementView = PlacementView(human.board, human.shipInTransit.name);
@@ -81,9 +85,16 @@ const Game = (() => {
       }
     }
 
-    if (human.hasFleetSunk()) console.log("Bot won!");
-    if (bot.hasFleetSunk()) console.log("Human won!");
+    if (human.hasFleetSunk() || bot.hasFleetSunk()) {
+      humanBoard.clear();
+      botBoard.clear();
+
+      if (human.hasFleetSunk()) gameEndView.render("You lost!");
+      if (bot.hasFleetSunk()) gameEndView.render("You won!");
+    }
   };
+
+  gameEndView.bindNewGameListener(newGame);
 
   return {
     newGame,
