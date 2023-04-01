@@ -8,6 +8,8 @@ function GameboardView(boardModel, boardHeader) {
 
   const render = () => boardContainer.appendChild(board.node);
 
+  const clear = () => boardContainer.replaceChildren();
+
   const markHit = (coord) => {
     const cell = board.getCell(coord);
     const span = createElement('<span class="hit"></span>');
@@ -29,6 +31,7 @@ function GameboardView(boardModel, boardHeader) {
   };
 
   return {
+    clear,
     render,
     markHit,
     markMiss,
