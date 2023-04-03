@@ -1,5 +1,5 @@
-import Bot from "../Bot";
-import Player from "../Player";
+import Bot from "../models/Bot";
+import Player from "../models/Player";
 
 import GameEndView from "../views/GameEndView";
 import GameboardView from "../views/GameboardView";
