@@ -1,4 +1,4 @@
-import Player from "../js/Player";
+import Player from "../js/models/Player";
 
 describe("Player", () => {
   const player = Player.new("Test Player");

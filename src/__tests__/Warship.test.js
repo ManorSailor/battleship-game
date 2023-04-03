@@ -1,4 +1,4 @@
-import Warship from "../js/Warship";
+import Warship from "../js/models/Warship";
 
 const shipInfo = { name: "TestShip", health: 1 };
 

@@ -1,4 +1,4 @@
-import ShipManager from "../js/ShipManager";
+import ShipManager from "../js/models/ShipManager";
 
 describe("ShipManager", () => {
   const testShips = [

@@ -1,4 +1,4 @@
-import Gameboard from "../js/Gameboard";
+import Gameboard from "../js/models/Gameboard";
 
 const boardInfo = { size: 10 };
 
